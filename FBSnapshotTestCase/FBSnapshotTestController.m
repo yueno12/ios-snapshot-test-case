@@ -81,6 +81,19 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                                         error:errorPtr];
 }
 
+- (BOOL)compareSnapshotOfScreen:(XCUIScreen *)screen
+                     selector:(SEL)selector
+                   identifier:(NSString *)identifier
+                        error:(NSError **)errorPtr
+{
+    return [self compareSnapshotOfViewOrLayer:screen
+                                     selector:selector
+                                   identifier:identifier
+                            perPixelTolerance:0
+                             overallTolerance:0
+                                        error:errorPtr];
+}
+
 - (BOOL)compareSnapshotOfViewOrLayer:(id)viewOrLayer
                             selector:(SEL)selector
                           identifier:(NSString *)identifier
@@ -395,6 +408,8 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
         }
     } else if ([viewOrLayer isKindOfClass:[CALayer class]]) {
         return [UIImage fb_imageForLayer:viewOrLayer];
+    } else if ([viewOrLayer isKindOfClass:[XCUIScreen class]]) {
+        return [(XCUIScreen *)viewOrLayer screenshot].image;
     } else {
         [NSException raise:@"Only UIView and CALayer classes can be snapshotted" format:@"%@", viewOrLayer];
     }

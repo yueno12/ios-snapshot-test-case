@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <XCTest/XCTest.h>
 
 #import <FBSnapshotTestCase/FBSnapshotTestCasePlatform.h>
 
@@ -123,6 +124,12 @@ extern NSString *const FBDiffedImageKey;
                      selector:(SEL)selector
                    identifier:(nullable NSString *)identifier
                         error:(NSError **)errorPtr;
+
+
+- (BOOL)compareSnapshotOfScreen:(XCUIScreen *)screen
+                       selector:(SEL)selector
+                     identifier:(NSString *)identifier
+                          error:(NSError **)errorPtr;
 
 /**
  Performs the comparison of a view or layer.

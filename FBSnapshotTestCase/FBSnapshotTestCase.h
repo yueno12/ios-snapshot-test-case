@@ -279,6 +279,21 @@ NS_ASSUME_NONNULL_BEGIN
              overallTolerance:(CGFloat)overallTolerance
                         error:(NSError **)errorPtr;
 
+- (BOOL)compareSnapshotOfScreen:(XCUIScreen *)screen
+       referenceImagesDirectory:(NSString *)referenceImagesDirectory
+             imageDiffDirectory:(NSString *)imageDiffDirectory
+                     identifier:(nullable NSString *)identifier
+               overallTolerance:(CGFloat)overallTolerance
+                          error:(NSError **)errorPtr;
+
+- (BOOL)compareSnapshotOfScreen:(XCUIScreen *)screen
+       referenceImagesDirectory:(NSString *)referenceImagesDirectory
+             imageDiffDirectory:(NSString *)imageDiffDirectory
+                     identifier:(nullable NSString *)identifier
+              perPixelTolerance:(CGFloat)perPixelTolerance
+               overallTolerance:(CGFloat)overallTolerance
+                          error:(NSError **)errorPtr;
+
 /**
  Checks if reference image with identifier based name exists in the reference images directory.
  @param referenceImagesDirectory The directory in which reference images are stored.
