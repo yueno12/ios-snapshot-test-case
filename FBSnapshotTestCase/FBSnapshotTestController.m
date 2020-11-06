@@ -409,7 +409,15 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
     } else if ([viewOrLayer isKindOfClass:[CALayer class]]) {
         return [UIImage fb_imageForLayer:viewOrLayer];
     } else if ([viewOrLayer isKindOfClass:[XCUIScreen class]]) {
-        return [(XCUIScreen *)viewOrLayer screenshot].image;
+        UIImage* image = [(XCUIScreen *)viewOrLayer screenshot].image;
+        if (image.imageOrientation == UIImageOrientationUp) {
+            return image;
+        }
+        UIGraphicsBeginImageContext(image.size);
+        [image drawInRect: CGRectMake(0, 0, image.size.width, image.size.height)];
+        UIImage* rotatedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return rotatedImage;
     } else {
         [NSException raise:@"Only UIView and CALayer classes can be snapshotted" format:@"%@", viewOrLayer];
     }
