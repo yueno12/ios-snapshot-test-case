@@ -24,6 +24,10 @@ public extension FBSnapshotTestCase {
     FBSnapshotVerifyViewOrLayer(layer, identifier: identifier, suffixes: suffixes, perPixelTolerance: perPixelTolerance, overallTolerance: overallTolerance, file: file, line: line)
   }
 
+    func FBSnapshotVerifyImage(_ image: UIImage, identifier: String? = nil, suffixes: NSOrderedSet = FBSnapshotTestCaseDefaultSuffixes(), perPixelTolerance: CGFloat = 0, overallTolerance: CGFloat = 0, file: StaticString = #file, line: UInt = #line) {
+      FBSnapshotVerifyViewOrLayer(image, identifier: identifier, suffixes: suffixes, perPixelTolerance: perPixelTolerance, overallTolerance: overallTolerance, file: file, line: line)
+    }
+
   private func FBSnapshotVerifyViewOrLayer(_ viewOrLayer: AnyObject, identifier: String? = nil, suffixes: NSOrderedSet = FBSnapshotTestCaseDefaultSuffixes(), perPixelTolerance: CGFloat = 0, overallTolerance: CGFloat = 0, file: StaticString = #file, line: UInt = #line) {
     let envReferenceImageDirectory = self.getReferenceImageDirectory(withDefault: nil)
     let envImageDiffDirectory = self.getImageDiffDirectory(withDefault: nil)
@@ -44,6 +48,14 @@ public extension FBSnapshotTestCase {
       } else if viewOrLayer.isKind(of: CALayer.self) {
         do {
           try compareSnapshot(of: viewOrLayer as! CALayer, referenceImagesDirectory: referenceImagesDirectory, imageDiffDirectory: imageDiffDirectory, identifier: identifier, perPixelTolerance: perPixelTolerance, overallTolerance: overallTolerance)
+          comparisonSuccess = true
+        } catch let error1 as NSError {
+          error = error1
+          comparisonSuccess = false
+        }
+      } else if viewOrLayer.isKind(of: UIImage.self) {
+        do {
+          try compareSnapshot(of: viewOrLayer as! UIImage, referenceImagesDirectory: referenceImagesDirectory, imageDiffDirectory: imageDiffDirectory, identifier: identifier, perPixelTolerance: perPixelTolerance, overallTolerance: overallTolerance)
           comparisonSuccess = true
         } catch let error1 as NSError {
           error = error1

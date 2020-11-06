@@ -395,6 +395,8 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
         }
     } else if ([viewOrLayer isKindOfClass:[CALayer class]]) {
         return [UIImage fb_imageForLayer:viewOrLayer];
+    } else if ([viewOrLayer isKindOfClass:[UIImage class]]) {
+        return (UIImage *)viewOrLayer;
     } else {
         [NSException raise:@"Only UIView and CALayer classes can be snapshotted" format:@"%@", viewOrLayer];
     }

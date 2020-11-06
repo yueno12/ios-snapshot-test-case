@@ -220,6 +220,39 @@
                                          error:errorPtr];
 }
 
+- (BOOL)compareSnapshotOfImage:(UIImage *)image
+      referenceImagesDirectory:(NSString *)referenceImagesDirectory
+            imageDiffDirectory:(NSString *)imageDiffDirectory
+                    identifier:(NSString *)identifier
+              overallTolerance:(CGFloat)overallTolerance
+                         error:(NSError **)errorPtr
+{
+    return [self _compareSnapshotOfViewOrLayer:image
+                      referenceImagesDirectory:referenceImagesDirectory
+                            imageDiffDirectory:imageDiffDirectory
+                                    identifier:identifier
+                             perPixelTolerance:0
+                              overallTolerance:overallTolerance
+                                         error:errorPtr];
+}
+
+- (BOOL)compareSnapshotOfImage:(UIImage *)image
+      referenceImagesDirectory:(NSString *)referenceImagesDirectory
+            imageDiffDirectory:(NSString *)imageDiffDirectory
+                    identifier:(NSString *)identifier
+             perPixelTolerance:(CGFloat)perPixelTolerance
+              overallTolerance:(CGFloat)overallTolerance
+                         error:(NSError **)errorPtr
+{
+    return [self _compareSnapshotOfViewOrLayer:image
+                      referenceImagesDirectory:referenceImagesDirectory
+                            imageDiffDirectory:(NSString *)imageDiffDirectory
+                                    identifier:identifier
+                             perPixelTolerance:perPixelTolerance
+                              overallTolerance:overallTolerance
+                                         error:errorPtr];
+}
+
 - (BOOL)referenceImageRecordedInDirectory:(NSString *)referenceImagesDirectory
                                identifier:(NSString *)identifier
                                     error:(NSError **)errorPtr
